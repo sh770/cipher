@@ -92,3 +92,17 @@ textarea {
 textarea::placeholder {
   text-align: center;
 }
+/* כאשר רוחב המסך קטן מ־600px נעבור לפריסה אנכית של הכפתורים */
+@media (max-width: 600px) {
+  .controls {
+    width: 90%;            /* מרחיבים את האזור כדי שלא ילחץ מדי */
+    flex-direction: column; /* שמים את הכפתורים אחד מעל השני */
+    gap: 16px;              /* רווח בין הכפתורים */
+    align-items: center;    /* ממרכזים את הכפתורים */
+  }
+
+  .btn {
+    width: 100%;            /* הכפתור ימלא את כל השורה */
+    text-align: center;     /* מרכז טקסט בכפתור */
+  }
+}
