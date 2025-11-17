@@ -97,7 +97,7 @@ textarea::placeholder {
   .controls {
     width: 90%;            /* מרחיבים את האזור כדי שלא ילחץ מדי */
     flex-direction: column; /* שמים את הכפתורים אחד מעל השני */
-    gap: 16px;              /* רווח בין הכפתורים */
+    gap: 10px;              /* רווח בין הכפתורים */
     align-items: center;    /* ממרכזים את הכפתורים */
   }
 
