@@ -19,21 +19,22 @@
 body {
   font-family: 'Rubik', sans-serif;
   background: var(--bg-gradient);
-  min-height: 100vh;
+  /* הגדרת גובה המסך המלא בדיוק וללא גלילה */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; 
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   color: var(--text-main);
-  overflow: hidden; /* מונע גלילה אם אין צורך */
 }
 
-/* הוספת אלמנטים דקורטיביים לרקע */
+/* אלמנטים דקורטיביים ברקע */
 body::before, body::after {
   content: '';
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 40vw; /* גודל יחסי למסך */
+  height: 40vw;
   border-radius: 50%;
   filter: blur(80px);
   z-index: -1;
@@ -42,14 +43,14 @@ body::before, body::after {
 
 body::before {
   background: var(--primary-color);
-  top: -50px;
-  left: -50px;
+  top: -10%;
+  left: -10%;
 }
 
 body::after {
   background: var(--accent-color);
-  bottom: -50px;
-  right: -50px;
+  bottom: -10%;
+  right: -10%;
 }
 
 .card {
@@ -58,18 +59,18 @@ body::after {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
-  padding: 40px;
-  width: 100%;
-  max-width: 600px;
   box-shadow: var(--shadow);
+  
+  /* כאן השינוי הגדול - גודל יחסי למסך */
+  width: 90vw;       /* 90% מרוחב המסך */
+  height: 90vh;      /* 90% מגובה המסך */
+  max-width: 1000px; /* הגבלה שלא יהיה ענק מדי במסכים רחבים */
+  
+  /* סידור פנימי כדי שהטקסט יגדל */
   display: flex;
   flex-direction: column;
+  padding: 30px;
   gap: 20px;
-  transition: transform 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
 }
 
 .background-title {
@@ -80,21 +81,21 @@ body::after {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  margin-bottom: 10px;
-  letter-spacing: -1px;
+  flex-shrink: 0; /* מונע מהכותרת להתכווץ */
 }
 
 textarea {
+  /* מתיחת הטקסט על כל המקום הפנוי */
+  flex-grow: 1; 
   width: 100%;
-  height: 200px;
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 20px;
   color: var(--text-main);
-  font-size: 1.1rem;
+  font-size: 1.2rem; /* טקסט קצת יותר גדול */
   font-family: 'Rubik', sans-serif;
-  resize: none;
+  resize: none; /* ביטול אפשרות גרירה ידנית */
   outline: none;
   transition: all 0.3s ease;
   line-height: 1.6;
@@ -111,13 +112,14 @@ textarea::placeholder {
 }
 
 .controls {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 15px;
+  flex-shrink: 0; /* מונע מהכפתורים להתכווץ */
+  height: 60px; /* גובה קבוע לאזור הכפתורים */
 }
 
 .btn {
-  padding: 12px 20px;
+  flex: 1; /* כל הכפתורים בגודל שווה */
   border: none;
   border-radius: 12px;
   font-family: inherit;
@@ -126,17 +128,13 @@ textarea::placeholder {
   cursor: pointer;
   transition: all 0.3s ease;
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* עיצוב ייחודי לכל כפתור */
 #actionBtn {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-  grid-column: span 4; /* כפתור ההמרה תופס את כל הרוחב במובייל או שורה נפרדת */
   font-weight: 700;
   font-size: 1.1rem;
+  flex: 2; /* כפתור ההמרה יהיה רחב כפול מהאחרים */
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
 }
 
@@ -165,32 +163,29 @@ textarea::placeholder {
   background: rgba(220, 38, 38, 0.25);
 }
 
-/* התאמה למסכים גדולים - שורה אחת לכפתורים המשניים */
-@media (min-width: 500px) {
+/* התאמה למובייל */
+@media (max-width: 600px) {
+  .card {
+    width: 95vw;
+    height: 95vh;
+    padding: 20px;
+  }
+
+  .background-title {
+    font-size: 1.8rem;
+  }
+  
   .controls {
-    grid-template-columns: repeat(3, 1fr);
+    flex-wrap: wrap;
+    height: auto;
+  }
+  
+  .btn {
+    padding: 15px;
   }
   
   #actionBtn {
-    grid-column: span 3;
-    margin-bottom: 10px;
+    flex-basis: 100%; /* במובייל כפתור הפעולה יתפוס שורה מלאה */
+    order: -1; /* יעלה לראש הכפתורים */
   }
-}
-
-/* התאמה לסרגל גלילה יפה */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
 }
