@@ -7,144 +7,143 @@
   --glass-border: rgba(255, 255, 255, 0.1);
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; /* טיפול בחישובי רוחב */
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: 'Rubik', sans-serif;
-  background: var(--bg-gradient);
-  /* הגדרת גובה המסך המלא בדיוק וללא גלילה */
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden; 
-  display: flex;
+  font-family: 'Rubik', sans-serif; /* פונ्ट כללי */
+  background: var(--bg-gradient); /* רקע גרדיאנט */
+  height: 100vh; /* גובה מלא למסך */
+  width: 100vw; /* רוחב מלא למסך */
+  overflow: hidden; /* ביטול גלילה לחלוטין */
+  display: flex; /* מרכוז אופקי ואנכי */
   align-items: center;
   justify-content: center;
   color: var(--text-main);
+  position: relative; /* מאפשר מיקום רקעים */
 }
 
-/* אלמנטים דקורטיביים ברקע */
+/* עיגולים מטושטשים ברקע */
 body::before, body::after {
-  content: '';
+  content: "";
   position: absolute;
-  width: 40vw; /* גודל יחסי למסך */
-  height: 40vw;
+  width: 45vw; /* טיפה יותר גדול */
+  height: 45vw;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(90px); /* יותר רך */
   z-index: -1;
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 body::before {
   background: var(--primary-color);
-  top: -10%;
-  left: -10%;
+  top: -15%;
+  left: -15%;
 }
 
 body::after {
   background: var(--accent-color);
-  bottom: -10%;
-  right: -10%;
+  bottom: -15%;
+  right: -15%;
 }
 
+/* הכרטיס המרכזי */
 .card {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--card-bg); /* רקע זכוכיתי */
+  backdrop-filter: blur(14px); /* טשטוש */
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   box-shadow: var(--shadow);
-  
-  /* כאן השינוי הגדול - גודל יחסי למסך */
-  width: 90vw;       /* 90% מרוחב המסך */
-  height: 90vh;      /* 90% מגובה המסך */
-  max-width: 1000px; /* הגבלה שלא יהיה ענק מדי במסכים רחבים */
-  
-  /* סידור פנימי כדי שהטקסט יגדל */
+
+  /* גודל דינמי שממלא יפה את המסך */
+  width: min(92vw, 1100px); /* רחב במסכים גדולים */
+  height: min(92vh, 850px); /* גבוה אבל מוגבל אסתטית */
+
   display: flex;
   flex-direction: column;
-  padding: 30px;
+  padding: 28px;
   gap: 20px;
 }
 
+/* כותרת */
 .background-title {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 3vw, 2.6rem); /* גמיש לפי מסך */
   font-weight: 700;
   background: linear-gradient(to right, #818cf8, #f472b6);
   -webkit-background-clip: text;
-  background-clip: text;
   color: transparent;
-  flex-shrink: 0; /* מונע מהכותרת להתכווץ */
 }
 
+/* תיבת טקסט */
 textarea {
-  /* מתיחת הטקסט על כל המקום הפנוי */
-  flex-grow: 1; 
+  flex: 1; /* ממלא את כל השטח הפנוי */
   width: 100%;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 18px;
+  padding: 22px;
   color: var(--text-main);
-  font-size: 1.2rem; /* טקסט קצת יותר גדול */
-  font-family: 'Rubik', sans-serif;
-  resize: none; /* ביטול אפשרות גרירה ידנית */
+  font-size: clamp(1.1rem, 2vw, 1.4rem); /* גדילת טקסט לפי מסך */
+  font-family: inherit;
+  resize: none;
   outline: none;
-  transition: all 0.3s ease;
   line-height: 1.6;
+  transition: all 0.3s;
 }
 
 textarea:focus {
   border-color: var(--primary-color);
-  background: rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
 }
 
 textarea::placeholder {
   color: var(--text-muted);
 }
 
+/* כפתורים */
 .controls {
   display: flex;
   gap: 15px;
-  flex-shrink: 0; /* מונע מהכפתורים להתכווץ */
-  height: 60px; /* גובה קבוע לאזור הכפתורים */
+  flex-shrink: 0;
+  height: 60px;
 }
 
 .btn {
-  flex: 1; /* כל הכפתורים בגודל שווה */
+  flex: 1;
   border: none;
   border-radius: 12px;
   font-family: inherit;
   font-weight: 500;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   color: white;
 }
 
+/* כפתור פעולה ראשי */
 #actionBtn {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   font-weight: 700;
-  font-size: 1.1rem;
-  flex: 2; /* כפתור ההמרה יהיה רחב כפול מהאחרים */
+  font-size: 1.15rem;
+  flex: 2;
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
 }
 
 #actionBtn:hover {
-  filter: brightness(1.1);
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
+/* שאר הכפתורים */
 #copyBtn, #pasteBtn, #clearBtn {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -155,37 +154,29 @@ textarea::placeholder {
 
 #clearBtn {
   color: #fca5a5;
-  background: rgba(220, 38, 38, 0.15);
-  border-color: rgba(220, 38, 38, 0.2);
+  background: rgba(220, 38, 38, 0.17);
+  border-color: rgba(220, 38, 38, 0.25);
 }
 
 #clearBtn:hover {
-  background: rgba(220, 38, 38, 0.25);
+  background: rgba(220, 38, 38, 0.27);
 }
 
-/* התאמה למובייל */
+/* מובייל */
 @media (max-width: 600px) {
   .card {
     width: 95vw;
     height: 95vh;
-    padding: 20px;
+    padding: 18px;
   }
 
-  .background-title {
-    font-size: 1.8rem;
-  }
-  
   .controls {
     flex-wrap: wrap;
     height: auto;
   }
-  
-  .btn {
-    padding: 15px;
-  }
-  
+
   #actionBtn {
-    flex-basis: 100%; /* במובייל כפתור הפעולה יתפוס שורה מלאה */
-    order: -1; /* יעלה לראש הכפתורים */
+    flex-basis: 100%; 
+    order: -1;
   }
 }
