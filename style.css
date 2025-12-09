@@ -1,108 +1,196 @@
 :root {
-  --bg: #0f1724;
-  --accent: #7c3aed;
-  --muted: #9aa4b2;
-  color-scheme: dark;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial;
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --accent-color: #ec4899;
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
+
 * {
   box-sizing: border-box;
-}
-html,
-body {
-  height: 100%;
   margin: 0;
+  padding: 0;
 }
+
 body {
-  background: radial-gradient(
-      1200px 600px at 10% 10%,
-      rgba(124, 58, 237, 0.12),
-      transparent
-    ),
-    linear-gradient(180deg, var(--bg), #071020 80%);
+  font-family: 'Rubik', sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e6eef8;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 20px;
+  color: var(--text-main);
+  overflow: hidden; /* מונע גלילה אם אין צורך */
 }
+
+/* הוספת אלמנטים דקורטיביים לרקע */
+body::before, body::after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  opacity: 0.4;
+}
+
+body::before {
+  background: var(--primary-color);
+  top: -50px;
+  left: -50px;
+}
+
+body::after {
+  background: var(--accent-color);
+  bottom: -50px;
+  right: -50px;
+}
+
 .card {
-  width: 85%;
-  height: 85%;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(6px);
+  gap: 20px;
+  transition: transform 0.3s ease;
 }
-h1.background-title {
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.background-title {
   text-align: center;
-  color: rgba(238, 14, 14, 0.856);
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #818cf8, #f472b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+  letter-spacing: -1px;
 }
+
 textarea {
-  flex: 1;
-  width: 80%;
-  max-width: 80%;
-  padding: 22px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  border: 6px solid transparent;
-  background-image: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.03),
-      rgba(255, 255, 255, 0.01)
-    ),
-    linear-gradient(120deg, #b388ff, #7c3aed, #4f46e5, #9333ea, #c084fc);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  color: inherit;
-  font-size: 2rem;
-  line-height: 1.55;
-  outline: none;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
-  caret-color: var(--accent);
+  width: 100%;
+  height: 200px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 20px;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  font-family: 'Rubik', sans-serif;
   resize: none;
+  outline: none;
+  transition: all 0.3s ease;
+  line-height: 1.6;
 }
-.controls {
-  width: 50%;
-  max-width: 80%;
-  display: flex;
-  justify-content: space-around;
-  margin: 30px;
-}
-.btn {
-  border: 2;
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 25px;
-  cursor: pointer;
-  background: linear-gradient(90deg, var(--accent), #4f46e5);
-  color: white;
-}
-textarea {
-  text-align: center;
+
+textarea:focus {
+  border-color: var(--primary-color);
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
 textarea::placeholder {
-  text-align: center;
+  color: var(--text-muted);
 }
-/* כאשר רוחב המסך קטן מ־600px נעבור לפריסה אנכית של הכפתורים */
-@media (max-width: 600px) {
-  .controls {
-    width: 90%;            /* מרחיבים את האזור כדי שלא ילחץ מדי */
-    flex-direction: column; /* שמים את הכפתורים אחד מעל השני */
-    gap: 10px;              /* רווח בין הכפתורים */
-    align-items: center;    /* ממרכזים את הכפתורים */
-  }
 
-  .btn {
-    width: 100%;            /* הכפתור ימלא את כל השורה */
-    text-align: center;     /* מרכז טקסט בכפתור */
+.controls {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* עיצוב ייחודי לכל כפתור */
+#actionBtn {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  grid-column: span 4; /* כפתור ההמרה תופס את כל הרוחב במובייל או שורה נפרדת */
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+#actionBtn:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+#copyBtn, #pasteBtn, #clearBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#copyBtn:hover, #pasteBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+#clearBtn {
+  color: #fca5a5;
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+#clearBtn:hover {
+  background: rgba(220, 38, 38, 0.25);
+}
+
+/* התאמה למסכים גדולים - שורה אחת לכפתורים המשניים */
+@media (min-width: 500px) {
+  .controls {
+    grid-template-columns: repeat(3, 1fr);
   }
+  
+  #actionBtn {
+    grid-column: span 3;
+    margin-bottom: 10px;
+  }
+}
+
+/* התאמה לסרגל גלילה יפה */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
