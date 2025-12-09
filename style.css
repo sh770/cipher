@@ -1,3 +1,4 @@
+/* משתנים כלליים */
 :root {
   --primary-color: #6366f1;
   --primary-hover: #4f46e5;
@@ -10,34 +11,35 @@
   --shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
 }
 
+/* איפוס */
 * {
-  box-sizing: border-box; /* טיפול בחישובי רוחב */
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* גוף הדף */
 body {
-  font-family: 'Rubik', sans-serif; /* פונ्ट כללי */
-  background: var(--bg-gradient); /* רקע גרדיאנט */
-  height: 100vh; /* גובה מלא למסך */
-  width: 100vw; /* רוחב מלא למסך */
-  overflow: hidden; /* ביטול גלילה לחלוטין */
-  display: flex; /* מרכוז אופקי ואנכי */
-  align-items: center;
-  justify-content: center;
-  color: var(--text-main);
-  position: relative; /* מאפשר מיקום רקעים */
+  font-family: 'Rubik', sans-serif;        /* הפונט הכללי */
+  background: var(--bg-gradient);          /* רקע גרדיאנט */
+  height: 100vh;                           /* תופס את כל הגובה */
+  width: 100vw;                            /* תופס את כל הרוחב */
+  overflow: hidden;                        /* ביטול גלילה */
+  display: flex;                           /* מרכוז אנכי ואופקי */
+  align-items: center;                     /* מרכוז אנכי */
+  justify-content: center;                 /* מרכוז אופקי */
+  position: relative;                      /* דרוש כדי לאפשר עיגולים ברקע */
 }
 
 /* עיגולים מטושטשים ברקע */
 body::before, body::after {
   content: "";
   position: absolute;
-  width: 45vw; /* טיפה יותר גדול */
+  width: 45vw;
   height: 45vw;
   border-radius: 50%;
-  filter: blur(90px); /* יותר רך */
-  z-index: -1;
+  filter: blur(90px);
+  z-index: -1;          /* מאחורי הכרטיס */
   opacity: 0.35;
 }
 
@@ -53,19 +55,18 @@ body::after {
   right: -15%;
 }
 
-/* הכרטיס המרכזי */
+/* הכרטיס */
 .card {
-  background: var(--card-bg); /* רקע זכוכיתי */
-  backdrop-filter: blur(14px); /* טשטוש */
+  background: var(--card-bg);             /* רקע זכוכיתי */
+  backdrop-filter: blur(14px);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   box-shadow: var(--shadow);
 
-  /* גודל דינמי שממלא יפה את המסך */
-  width: min(92vw, 1100px); /* רחב במסכים גדולים */
-  height: min(92vh, 850px); /* גבוה אבל מוגבל אסתטית */
+  width: min(92vw, 1100px);               /* גודל דינמי */
+  height: min(92vh, 850px);
 
-  display: flex;
+  display: flex;                          /* פריסה אנכית */
   flex-direction: column;
   padding: 28px;
   gap: 20px;
@@ -74,7 +75,7 @@ body::after {
 /* כותרת */
 .background-title {
   text-align: center;
-  font-size: clamp(1.8rem, 3vw, 2.6rem); /* גמיש לפי מסך */
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
   font-weight: 700;
   background: linear-gradient(to right, #818cf8, #f472b6);
   -webkit-background-clip: text;
@@ -83,14 +84,14 @@ body::after {
 
 /* תיבת טקסט */
 textarea {
-  flex: 1; /* ממלא את כל השטח הפנוי */
+  flex-grow: 1;                           /* ממלאת את כל הגובה הפנוי */
   width: 100%;
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--glass-border);
   border-radius: 18px;
   padding: 22px;
   color: var(--text-main);
-  font-size: clamp(1.1rem, 2vw, 1.4rem); /* גדילת טקסט לפי מסך */
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   font-family: inherit;
   resize: none;
   outline: none;
@@ -108,14 +109,40 @@ textarea::placeholder {
   color: var(--text-muted);
 }
 
-/* כפתורים */
+/* קונטיינר לכפתור המרה */
+.action-container {
+  display: flex;           /* שורה אחת */
+  width: 100%;
+}
+
+/* כפתור אחד בראש הכרטיס */
+#actionBtn {
+  flex: 1;                 /* תופס את כל הרוחב */
+  border: none;
+  height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  font-weight: 700;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+#actionBtn:hover {
+  transform: scale(1.03);
+}
+
+/* שורת כפתורים תחתונה */
 .controls {
   display: flex;
   gap: 15px;
-  flex-shrink: 0;
   height: 60px;
+  flex-shrink: 0;         /* לא מאפשר כיווץ */
 }
 
+/* כפתורי עזר */
 .btn {
   flex: 1;
   border: none;
@@ -128,20 +155,6 @@ textarea::placeholder {
   color: white;
 }
 
-/* כפתור פעולה ראשי */
-#actionBtn {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-  font-weight: 700;
-  font-size: 1.15rem;
-  flex: 2;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-}
-
-#actionBtn:hover {
-  transform: scale(1.03);
-}
-
-/* שאר הכפתורים */
 #copyBtn, #pasteBtn, #clearBtn {
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -176,7 +189,6 @@ textarea::placeholder {
   }
 
   #actionBtn {
-    flex-basis: 100%; 
-    order: -1;
+    height: 55px;
   }
 }
